@@ -1,3 +1,4 @@
+pip install sounddevice wavio
 import streamlit as st
 import sounddevice as sd
 import numpy as np
