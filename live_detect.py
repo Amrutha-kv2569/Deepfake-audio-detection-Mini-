@@ -1,24 +1,10 @@
-import sounddevice as sd
 import streamlit as st
-import sounddevice as sd
 import numpy as np
 import librosa
 from tensorflow.keras.models import load_model
-import wavio
 
-# Load your trained model
 model = load_model("lstm_mfcc_model.h5")
 
-# Function to record audio
-def record_audio(duration=2, sr=16000):
-    st.info("🎤 Recording... Speak now!")
-    recording = sd.rec(int(duration * sr), samplerate=sr, channels=1, dtype='float32')
-    sd.wait()
-    wavio.write("live_audio.wav", recording, sr, sampwidth=2)
-    st.success("✅ Recording complete!")
-    return "live_audio.wav"
-
-# Extract MFCCs (same as training)
 def extract_mfcc_for_predict(path, sr=16000, duration=2.0, n_mfcc=40, max_len=128):
     y, _ = librosa.load(path, sr=sr, mono=True, duration=duration)
     expected_len = int(sr * duration)
@@ -33,15 +19,22 @@ def extract_mfcc_for_predict(path, sr=16000, duration=2.0, n_mfcc=40, max_len=12
         mfcc = mfcc[:, :max_len]
     return mfcc.T[np.newaxis, ...].astype('float32')
 
-# Streamlit app
-st.title("🎤 Live Deepfake Audio Detection")
-st.write("Click the button below to record a 2-second audio sample and detect if it's real or fake.")
+st.title("🎤 Deepfake Audio Detection")
+st.write("Upload a **.wav** file to check if it's REAL or FAKE.")
 
-if st.button("🎙️ Record and Detect"):
-    audio_path = record_audio()
-    data = extract_mfcc_for_predict(audio_path)
-    pred = model.predict(data)[0][0]
+audio_file = st.file_uploader("Upload audio", type=["wav"])
+
+if audio_file:
+    st.audio(audio_file)
+
+    # Save uploaded file
+    with open("uploaded.wav", "wb") as f:
+        f.write(audio_file.getbuffer())
+
+    # Predict
+    x = extract_mfcc_for_predict("uploaded.wav")
+    pred = model.predict(x)[0][0]
     label = "🟢 REAL" if pred < 0.5 else "🔴 FAKE"
-    st.audio(audio_path)
-    st.write(f"**Prediction:** {label}")
-    st.write(f"**Confidence Score:** {pred:.4f}")
+
+    st.subheader(f"Prediction: {label}")
+    st.write(f"Confidence: {pred:.4f}")
