@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # --- Configuration (MUST match training configuration exactly) ---
-MODEL_FILENAME = 'best_cnn_spectrogram.h(cnn+lstm)' 
+MODEL_FILENAME = 'best_cnn_spectrogram(cnn+lstm).h5' 
 SAMPLE_RATE = 16000
 DURATION = 2.0
 N_MELS = 128
