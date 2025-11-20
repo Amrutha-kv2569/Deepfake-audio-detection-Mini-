@@ -120,11 +120,11 @@ model = load_deepfake_model()
 
 # --- Streamlit UI ---
 st.title("Deepfake Audio Detection App")
-st.write("Upload a `.wav` file to detect whether the speaker is **Real** or **Fake** (AI-generated).")
+st.write("Upload audio file to detect whether the speaker is **Real** or **Fake**.")
 st.markdown(f"*(Model trained on Combined Mel Spectrogram + MFCC features with expected input shape: **(168, {FEATURE_WIDTH}, 1)**)*")
 
 # File uploader
-audio_file = st.file_uploader("Upload an audio file...", type=["wav"])
+audio_file = st.file_uploader("**Upload an audio file...**", type=["wav"])
 
 if model is None:
     st.stop()
