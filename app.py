@@ -119,7 +119,7 @@ def load_deepfake_model():
 model = load_deepfake_model()
 
 # --- Streamlit UI ---
-st.title("🗣️ Deepfake Audio Detection App")
+st.title("Deepfake Audio Detection App")
 st.write("Upload a `.wav` file to detect whether the speaker is **Real** or **Fake** (AI-generated).")
 st.markdown(f"*(Model trained on Combined Mel Spectrogram + MFCC features with expected input shape: **(168, {FEATURE_WIDTH}, 1)**)*")
 
@@ -151,7 +151,7 @@ if audio_file is not None:
             label = "FAKE (AI-Generated)" if prediction >= PREDICTION_THRESHOLD else "REAL (Genuine)"
             
             # 4. Display Results
-            st.write("## 🔍 Prediction Result")
+            st.write("##  Prediction Result")
             
             if label.startswith("FAKE"):
                 st.error(f"The audio is predicted to be **{label}**")
