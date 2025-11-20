@@ -10,7 +10,7 @@ import soundfile as sf
 MODEL_PATH = "lstm_mfcc_model.h5"
 model = load_model(MODEL_PATH)
 
-st.title("🎙️ Deepfake Audio Detection App")
+st.title(" Deepfake Audio Detection App")
 st.write("Upload a `.wav` file to detect whether it is **Real** or **Fake**.")
 
 # ---------------------
@@ -48,8 +48,8 @@ if audio_file is not None:
     # Preprocess & Predict
     data = extract_mfcc_for_predict("uploaded_audio.wav")
     prediction = model.predict(data)[0][0]
-    label = "🟢 REAL" if prediction < 0.5 else "🔴 FAKE"
+    label = " REAL" if prediction < 0.5 else " FAKE"
 
-    st.write("## 🔍 Prediction Result")
+    st.write("##  Prediction Result")
     st.write(f"**Prediction:** {label}")
     st.write(f"**Confidence Score:** {prediction:.4f}")
