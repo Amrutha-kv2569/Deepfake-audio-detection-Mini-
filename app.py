@@ -7,7 +7,7 @@ import soundfile as sf
 # ---------------------
 # Load Model
 # ---------------------
-MODEL_PATH = "lstm_mfcc_model.h5"
+MODEL_PATH = "best_cnn_spectrogram(cnn+lstm).h5"
 model = load_model(MODEL_PATH)
 
 st.title(" Deepfake Audio Detection App")
